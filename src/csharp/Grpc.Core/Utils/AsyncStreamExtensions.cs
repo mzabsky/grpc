@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Grpc.Core.Utils
@@ -33,7 +34,7 @@ namespace Grpc.Core.Utils
         public static async Task ForEachAsync<T>(this IAsyncStreamReader<T> streamReader, Func<T, Task> asyncAction)
             where T : class
         {
-            while (await streamReader.MoveNext().ConfigureAwait(false))
+            while (await streamReader.MoveNext(CancellationToken.None).ConfigureAwait(false))
             {
                 await asyncAction(streamReader.Current).ConfigureAwait(false);
             }
@@ -46,7 +47,7 @@ namespace Grpc.Core.Utils
             where T : class
         {
             var result = new List<T>();
-            while (await streamReader.MoveNext().ConfigureAwait(false))
+            while (await streamReader.MoveNext(CancellationToken.None).ConfigureAwait(false))
             {
                 result.Add(streamReader.Current);
             }

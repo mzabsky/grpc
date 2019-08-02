@@ -18,6 +18,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Grpc.Core
 {
@@ -47,7 +48,8 @@ namespace Grpc.Core
     /// </para>
     /// </summary>
     /// <typeparam name="T">The message type.</typeparam>
-    public interface IAsyncStreamReader<T>
+
+    public interface IAsyncStreamReader<T> : IDisposable
     {
         /// <summary>
         /// Gets the current element in the iteration.

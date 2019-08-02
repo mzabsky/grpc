@@ -65,7 +65,7 @@ namespace Grpc.Core.Internal
             var context = HandlerUtils.NewContext(newRpc, responseStream, asyncCall.CancellationToken);
             try
             {
-                GrpcPreconditions.CheckArgument(await requestStream.MoveNext().ConfigureAwait(false));
+                GrpcPreconditions.CheckArgument(await requestStream.MoveNext(CancellationToken.None).ConfigureAwait(false));
                 var request = requestStream.Current;
                 var response = await handler(request, context).ConfigureAwait(false);
                 status = context.Status;
@@ -123,7 +123,7 @@ namespace Grpc.Core.Internal
             var context = HandlerUtils.NewContext(newRpc, responseStream, asyncCall.CancellationToken);
             try
             {
-                GrpcPreconditions.CheckArgument(await requestStream.MoveNext().ConfigureAwait(false));
+                GrpcPreconditions.CheckArgument(await requestStream.MoveNext(CancellationToken.None).ConfigureAwait(false));
                 var request = requestStream.Current;
                 await handler(request, responseStream, context).ConfigureAwait(false);
                 status = context.Status;
